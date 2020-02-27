@@ -1,0 +1,25 @@
+# Dependency directory
+node_modules/
+
+# Build Artifacts
+/output
+/src/output
+coverage/
+dist
+
+# Logs
+*.log
+
+# Misc
+.idea/
+.vs/
+.vscode/
+.DS_Store
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Users Environment Variables
+.lock-wscript

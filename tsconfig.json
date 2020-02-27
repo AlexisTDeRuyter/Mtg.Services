@@ -1,0 +1,32 @@
+{
+    "include": [
+        "src/**/*"
+    ],
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES6",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "moduleResolution": "Node",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "removeComments": false,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "dom",
+            "es2015",
+            "es2016",
+            "es6"
+        ],
+        "types": [
+            "reflect-metadata", "jest"
+        ],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "importHelpers": true
+    }
+}
+
