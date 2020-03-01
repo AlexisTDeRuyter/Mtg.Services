@@ -36,7 +36,7 @@ describe('App Tests', () => {
         beforeEach(() => {
             (<Mock>mockExpressFactory.create).mockReturnValue(mockExpress);
             (<Mock>mockCorsFactory.create).mockReturnValue(expectedCorsResult);
-            sut.init();
+            sut.initialize();
             (<PromiseMock<void>>mockDataAccessFactory.connect).resolve();
         });
 

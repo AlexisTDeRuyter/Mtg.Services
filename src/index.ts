@@ -41,6 +41,6 @@ container.register([
 
 const app: IApp = container.resolve(TApp);
 
-app.init();
+app.initialize();
 
 export {};

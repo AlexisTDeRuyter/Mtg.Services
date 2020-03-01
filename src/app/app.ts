@@ -1,6 +1,5 @@
 import { IServer, TServer } from './server/server';
 import { IRoutesResolver, TRoutesResolver } from './routes/routes.resolver';
-import * as cors from 'cors';
 import { IDataAccessFactory, TDataAccessFactory } from '../common/data-access/data-access.factory';
 import { Inject, Injectable } from 'container-ioc';
 import { Express } from 'express';
@@ -17,7 +16,7 @@ export class App implements IApp {
                 @Inject(TCorsFactory) private corsResolver: ICorsFactory) {
     }
 
-    async init(): Promise<void> {
+    async initialize(): Promise<void> {
         const app: Express = this.appResolver.create();
 
         app.use(this.corsResolver.create({
@@ -32,7 +31,7 @@ export class App implements IApp {
 }
 
 export interface IApp {
-    init: () => Promise<void>;
+    initialize: () => Promise<void>;
 }
 
 export const TApp = Symbol('IApp');
