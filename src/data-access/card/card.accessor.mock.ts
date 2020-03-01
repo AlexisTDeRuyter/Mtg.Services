@@ -1,23 +1,18 @@
-import 'jasmine';
-import { CardDataAccess } from './card.accessor';
-import { PromiseSpy } from '../../test/custom-spy';
-import { Card } from '../../domain/card';
+import 'jest';
+import { ICardAccessor } from './card.accessor';
+import { PromiseMock } from '../../test/custom-spy';
+import Mock = jest.Mock;
 
-export class MockCardDataAccess {
+export const MockCardAccessor: Mock = jest.fn<ICardAccessor, []>(() => {
 
-    mock: jasmine.SpyObj<CardDataAccess>;
+    const save: PromiseMock<any> = jest.fn() as PromiseMock<any>;
 
-    save: PromiseSpy<Card>;
+    save.mockReturnValue(new Promise((resolve, reject) => {
+        save.resolve = (stub?: any) => resolve(stub);
+        save.reject = (error?: Error) => reject(error);
+    }));
 
-    constructor() {
-        this.mock = jasmine.createSpyObj('MockCardDataAccess', [
-            'save'
-        ]);
-
-        this.save = this.mock.save as PromiseSpy<Card>;
-        this.save.and.returnValue(new Promise((resolve, reject) => {
-            this.save.resolve = (card: Card) => resolve(card);
-            this.save.reject = (error?: Error) => reject(error);
-        }));
-    }
-}
+    return {
+        save
+    };
+});

@@ -1,34 +1,34 @@
-import 'reflect-metadata';
+import 'jest';
 import { CardService } from './card.service';
-import { MockRestApiAccessor } from '../../data-access/rest-api-accessor.mock';
-import { MockCardDataAccess } from '../../data-access/card/card.accessor.mock';
 import { Card } from '../../domain/card';
 import { CardStub } from '../../domain/stubs/card.stub';
+import { MockRestApiAccessor } from '../../data-access/rest-api-accessor.mock';
+import { PromiseMock } from '../../test/custom-spy';
+import { MockCardAccessor } from '../../data-access/card/card.accessor.mock';
+import { IRestApiAccessor } from '../../data-access/rest-api-accessor';
+import { ICardAccessor } from '../../data-access/card/card.accessor';
 
 describe('CardService Tests', () => {
 
     let sut: CardService;
 
-    let mockRestApiAccessor: MockRestApiAccessor,
-        mockCardDataAccess: MockCardDataAccess;
+    let mockRestApiAccessor: IRestApiAccessor = new MockRestApiAccessor(),
+        mockCardDataAccess: ICardAccessor = new MockCardAccessor();
 
-    let expectedCard: Card;
+    const expectedCard: Card = new CardStub({});
 
     beforeEach(() => {
-        mockRestApiAccessor = new MockRestApiAccessor();
-        mockCardDataAccess = new MockCardDataAccess();
-        expectedCard = new CardStub({});
-        sut = new CardService(mockRestApiAccessor, mockCardDataAccess as any);
+        sut = new CardService(mockRestApiAccessor, mockCardDataAccess);
     });
 
-    describe('When getRandomCard is called', async () => {
+    describe('When getRandomCard is called', () => {
 
         let result: Card;
 
         beforeEach(async () => {
             const cardProm = sut.getRandomCard();
-            mockRestApiAccessor.get.resolve(expectedCard);
-            mockCardDataAccess.save.resolve();
+            (<PromiseMock<Card>>mockRestApiAccessor.get).resolve(expectedCard);
+            (<PromiseMock<void>>mockCardDataAccess.save).resolve();
             result = await cardProm;
         });
 
@@ -41,8 +41,7 @@ describe('CardService Tests', () => {
         });
 
         it('returns the retrieved card', () => {
-            expect(result).toBe(expectedCard);
-            expect(false).toBe(true);
+            expect(result).toEqual(expectedCard);
         });
     });
 });

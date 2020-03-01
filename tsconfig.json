@@ -22,7 +22,7 @@
             "es6"
         ],
         "types": [
-            "reflect-metadata", "jest"
+            "jest"
         ],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,

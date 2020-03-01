@@ -1,12 +1,12 @@
-import { injectable } from 'inversify';
-import { DatabaseAccessor } from '../database.accessor';
+import { IDatabaseAccessor, TDatabaseAccessor } from '../database.accessor';
 import { Card } from '../../domain/card';
 import { CardModel, ICardModel } from './card.model';
+import { Inject, Injectable } from 'container-ioc';
 
-@injectable()
-export class CardDataAccess implements ICardDataAccess {
+@Injectable()
+export class CardAccessor implements ICardAccessor {
 
-    constructor(private dataAccess: DatabaseAccessor) {
+    constructor(@Inject(TDatabaseAccessor) private dataAccess: IDatabaseAccessor) {
     }
 
     async save(card: Card): Promise<void> {
@@ -14,6 +14,8 @@ export class CardDataAccess implements ICardDataAccess {
     }
 }
 
-export interface ICardDataAccess {
+export interface ICardAccessor {
     save: (card: Card) => Promise<void>;
 }
+
+export const TCardAccessor = Symbol('ICardAccessor');

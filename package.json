@@ -14,12 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "bent": "^7.1.0",
+    "container-ioc": "^1.7.19",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "inversify": "^5.0.1",
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.2",
-    "reflect-metadata": "^0.1.13",
     "typemoq": "^2.1.0"
   },
   "devDependencies": {
@@ -33,7 +32,6 @@
     "@types/mongodb": "^3.3.16",
     "@types/mongoose": "^5.7.1",
     "@types/node": "^13.7.4",
-    "@types/reflect-metadata": "^0.1.0",
     "babel-jest": "^25.1.0",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.1",

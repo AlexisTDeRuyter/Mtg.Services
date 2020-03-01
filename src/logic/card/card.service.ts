@@ -1,15 +1,15 @@
-import { injectable } from 'inversify';
-import { RestApiAccessor } from '../../data-access/rest-api-accessor';
+import { IRestApiAccessor, TRestApiAccessor } from '../../data-access/rest-api-accessor';
 import { Card } from '../../domain/card';
-import { CardDataAccess } from '../../data-access/card/card.accessor';
+import { ICardAccessor, TCardAccessor } from '../../data-access/card/card.accessor';
+import { Inject, Injectable } from 'container-ioc';
 
-@injectable()
-export class CardService {
+@Injectable()
+export class CardService implements ICardService {
 
     private readonly SCRYFALL_BASE_URL = 'https://api.scryfall.com/cards';
 
-    constructor(private restApiAccessor: RestApiAccessor,
-                private cardDataAccess: CardDataAccess) {
+    constructor(@Inject(TRestApiAccessor) private restApiAccessor: IRestApiAccessor,
+                @Inject(TCardAccessor) private cardDataAccess: ICardAccessor) {
     }
 
     async getRandomCard(): Promise<Card> {
@@ -18,3 +18,9 @@ export class CardService {
         return card;
     }
 }
+
+export interface ICardService {
+    getRandomCard: () => Promise<Card>;
+}
+
+export const TCardService = Symbol('ICardService');

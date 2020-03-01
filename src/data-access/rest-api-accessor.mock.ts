@@ -1,21 +1,18 @@
-import 'jasmine';
-import { RestApiAccessor } from './rest-api-accessor';
-import { PromiseSpy } from '../test/custom-spy';
+import 'jest';
+import { IRestApiAccessor } from './rest-api-accessor';
+import { PromiseMock } from '../test/custom-spy';
+import Mock = jest.Mock;
 
-export class MockRestApiAccessor {
+export const MockRestApiAccessor: Mock = jest.fn<IRestApiAccessor, []>(() => {
 
-    mock: jasmine.SpyObj<RestApiAccessor>;
+    const get: PromiseMock<any> = jest.fn() as PromiseMock<any>;
 
-    get: PromiseSpy<any>;
+    get.mockReturnValue(new Promise((resolve, reject) => {
+        get.resolve = (stub?: any) => resolve(stub);
+        get.reject = (error?: Error) => reject(error);
+    }));
 
-    constructor() {
-        this.mock = jasmine.createSpyObj('MockRestApiAccessor', [
-            'get'
-        ]);
-        this.get = this.mock.get as PromiseSpy<any>;
-        this.get.and.returnValue(new Promise((resolve, reject) => {
-            this.get.resolve = (stub?: any) => resolve(stub);
-            this.get.reject = (error?: Error) => reject(error);
-        }));
-    }
-}
+    return {
+        get
+    };
+});

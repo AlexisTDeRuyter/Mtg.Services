@@ -15,4 +15,4 @@ const CardModel = mongoose.model<ICardModel>('Card', cardSchema);
 
 export {
     CardModel
-};
+}
