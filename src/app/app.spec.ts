@@ -34,10 +34,10 @@ describe('App Tests', () => {
     describe('When init is called', () => {
 
         beforeEach(() => {
-            (<Mock>mockExpressFactory.create).mockReturnValue(mockExpress);
-            (<Mock>mockCorsFactory.create).mockReturnValue(expectedCorsResult);
+            (mockExpressFactory.create as Mock).mockReturnValue(mockExpress);
+            (mockCorsFactory.create as Mock).mockReturnValue(expectedCorsResult);
             sut.initialize();
-            (<PromiseMock<void>>mockDataAccessFactory.connect).resolve();
+            (mockDataAccessFactory.connect as PromiseMock<void>).resolve();
         });
 
         it('sets up cors', () => {

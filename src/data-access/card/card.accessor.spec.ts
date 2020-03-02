@@ -3,19 +3,24 @@ import { IDatabaseAccessor } from '../database.accessor';
 import { MockDatabaseAccessor } from '../database.accessor.mock';
 import { Card } from '../../domain/card';
 import { CardStub } from '../../domain/stubs/card.stub';
-import { ICardModel } from './card.model';
+import { CardModel } from './card.model';
 import Mock = jest.Mock;
+import { IDocumentFactory } from '../../common/mongoose/document.factory';
+import { MockDocumentFactory } from '../../common/mongoose/document.factory.mock';
 
 describe('CardAccessor Tests', () => {
 
     let sut: CardAccessor;
 
-    let mockDataAccess: IDatabaseAccessor = new MockDatabaseAccessor();
+    const mockDataAccess: IDatabaseAccessor = new MockDatabaseAccessor(),
+          mockDocumentFactory: IDocumentFactory = new MockDocumentFactory();
 
-    let expectedCard: Card = new CardStub({});
+    const expectedCard: Card = new CardStub({}),
+          expectedCardDocument = { _id: expectedCard.id, name: expectedCard.name };
 
     beforeEach(() => {
-        sut = new CardAccessor(mockDataAccess as IDatabaseAccessor);
+        (mockDocumentFactory.create as Mock).mockReturnValue(expectedCardDocument);
+        sut = new CardAccessor(mockDataAccess, mockDocumentFactory);
     });
 
     describe('When save is called', () => {
@@ -25,9 +30,8 @@ describe('CardAccessor Tests', () => {
         });
 
         it('saves the card', () => {
-            const calledWithCard: ICardModel = (<Mock>mockDataAccess.save).mock.calls.pop()!.pop() as ICardModel;
-            expect(calledWithCard!.name).toEqual(expectedCard.name);
-            expect(calledWithCard!.oracle_text).toEqual(expectedCard.oracle_text);
+            expect(mockDocumentFactory.create).toHaveBeenCalledWith(CardModel, expectedCard);
+            expect(mockDataAccess.save).toHaveBeenCalledWith(expectedCardDocument);
         });
     });
 });

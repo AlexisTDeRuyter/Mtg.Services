@@ -14,18 +14,18 @@ describe('CardRoutes Tests', () => {
 
     let sut: CardRoutes;
 
-    let mockRouterFactory: IRouterFactory = new MockRouterFactory(),
+    const mockRouterFactory: IRouterFactory = new MockRouterFactory(),
         mockCardService: ICardService = new MockCardService(),
         mockRouter: IRouter = new MockRouter();
 
-    let expectedCard: Card = new CardStub({}),
+    const expectedCard: Card = new CardStub({}),
         expectedRequest: Request = new MockRequest(),
         expectedResponse: Response = new MockResponse(),
         expectedNextFunction: NextFunction = MockNextFunction,
         expectedError: Error = { name: 'expectedError', message: 'oh no!' };
 
     beforeEach(() => {
-        (<Mock>mockRouterFactory.create).mockReturnValue(mockRouter);
+        (mockRouterFactory.create as Mock).mockReturnValue(mockRouter);
         sut = new CardRoutes(mockRouterFactory, mockCardService);
     });
 
@@ -39,7 +39,7 @@ describe('CardRoutes Tests', () => {
 
         beforeEach(() => {
             sut.getRandomCard(expectedRequest, expectedResponse, expectedNextFunction);
-            (<PromiseMock<Card>>mockCardService.getRandomCard).resolve(expectedCard);
+            (mockCardService.getRandomCard as PromiseMock<Card>).resolve(expectedCard);
         });
 
         it('calls cardService to get a random card', () => {

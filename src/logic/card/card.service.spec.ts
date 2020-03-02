@@ -12,8 +12,8 @@ describe('CardService Tests', () => {
 
     let sut: CardService;
 
-    let mockRestApiAccessor: IRestApiAccessor = new MockRestApiAccessor(),
-        mockCardDataAccess: ICardAccessor = new MockCardAccessor();
+    const mockRestApiAccessor: IRestApiAccessor = new MockRestApiAccessor(),
+          mockCardDataAccess: ICardAccessor = new MockCardAccessor();
 
     const expectedCard: Card = new CardStub({});
 

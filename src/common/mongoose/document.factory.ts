@@ -1,8 +1,19 @@
-import { Document, Model } from "mongoose";
-import { IModelable } from './card.model';
+import { Document, Model } from 'mongoose';
+import { Injectable } from 'container-ioc';
 
-export class DocumentFactory {
-    static create<T extends Document, U extends IModelable>(_model: Model<T>, obj: U): T {
-        return new _model(Object.assign({ _id: obj.id }, obj));
+@Injectable()
+export class DocumentFactory implements IDocumentFactory {
+    create<T extends Document, U extends IModelable>(model: Model<T>, obj: U): T {
+        return new model(Object.assign({ _id: obj.id }, obj));
     }
+}
+
+export interface IDocumentFactory {
+    create: <T extends Document, U extends IModelable>(model: Model<T>, obj: U) => T;
+}
+
+export const TDocumentFactory = Symbol('IDocumentFactory');
+
+export interface IModelable {
+    id: string;
 }

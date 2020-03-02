@@ -1,4 +1,6 @@
-export interface Card {
+import { IModelable } from '../common/mongoose/document.factory';
+
+export interface Card extends IModelable {
 
     // Core Card Fields
     arena_id?: number;

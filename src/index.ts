@@ -11,6 +11,7 @@ import { RoutesResolver, TRoutesResolver } from './app/routes/routes.resolver';
 import { Server, TServer } from './app/server/server';
 import { ExpressFactory, TExpressFactory } from './common/express/express.factory';
 import { CorsFactory, TCorsFactory } from './common/cors/cors.factory';
+import { DocumentFactory, TDocumentFactory } from './common/mongoose/document.factory';
 
 
 const container = new Container();
@@ -21,6 +22,7 @@ container.register([
     { token: TExpressFactory, useClass: ExpressFactory },
     { token: TCorsFactory, useClass: CorsFactory },
     { token: TDataAccessFactory, useClass: DataAccessFactory },
+    { token: TDocumentFactory, useClass: DocumentFactory },
 
     // Services
     { token: TCardService, useClass: CardService },

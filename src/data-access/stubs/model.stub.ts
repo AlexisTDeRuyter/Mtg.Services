@@ -9,8 +9,4 @@ export interface IStubModel extends Document {
     value: string;
 }
 
-const StubModel = mongoose.model<IStubModel>('Stub', stubSchema);
-
-export {
-    StubModel
-}
+export const StubModel = mongoose.model<IStubModel>('Stub', stubSchema);
